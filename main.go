@@ -106,16 +106,16 @@ func (cm *ChatMessages) AddUser(msg string) {
 }
 
 // AddTool adds a tool to the chat history
-func (cm *ChatMessages) AddTool(msg string, name string, toolCallId string) {
-	*cm = append(*cm, &ChatMessage{
-		Msg: openai.ChatCompletionMessage{
-			Role:       RoleTool,
-			Content:    msg,
-			Name:       name,
-			ToolCallID: toolCallId,
-		},
-	})
-}
+// func (cm *ChatMessages) AddTool(msg string, name string, toolCallId string) {
+// 	*cm = append(*cm, &ChatMessage{
+// 		Msg: openai.ChatCompletionMessage{
+// 			Role:       RoleTool,
+// 			Content:    msg,
+// 			Name:       name,
+// 			ToolCallID: toolCallId,
+// 		},
+// 	})
+// }
 
 func (cm *ChatMessages) GetLast() string {
 	if len(*cm) == 0 {
@@ -147,26 +147,26 @@ func Chat(message []openai.ChatCompletionMessage) openai.ChatCompletionMessage {
 
 // ChatWithTools sends the message history to the AI model with tools and returns the response
 // It handles any errors that might occur during the API call
-func ChatWithTools(message []openai.ChatCompletionMessage, tools []openai.Tool) openai.ChatCompletionMessage {
-	// Create a new OpenAI client for this request
-	client := NewOpenAiClient()
+// func ChatWithTools(message []openai.ChatCompletionMessage, tools []openai.Tool) openai.ChatCompletionMessage {
+// 	// Create a new OpenAI client for this request
+// 	client := NewOpenAiClient()
 
-	// Send the chat completion request to the API
-	rsp, err := client.CreateChatCompletion(context.TODO(), openai.ChatCompletionRequest{
-		Model:      os.Getenv("DASH_SCOPE_MODEL"),
-		Messages:   message,
-		Tools:      tools,
-		ToolChoice: "auto",
-	})
+// 	// Send the chat completion request to the API
+// 	rsp, err := client.CreateChatCompletion(context.TODO(), openai.ChatCompletionRequest{
+// 		Model:      os.Getenv("DASH_SCOPE_MODEL"),
+// 		Messages:   message,
+// 		Tools:      tools,
+// 		ToolChoice: "auto",
+// 	})
 
-	if err != nil {
-		log.Println(err)
-		return openai.ChatCompletionMessage{}
-	}
+// 	if err != nil {
+// 		log.Println(err)
+// 		return openai.ChatCompletionMessage{}
+// 	}
 
-	// Return the first (and typically only) message from the choices
-	return rsp.Choices[0].Message
-}
+// 	// Return the first (and typically only) message from the choices
+// 	return rsp.Choices[0].Message
+// }
 
 func main() {
 	query := "深圳现在的天气怎么样？请告诉我当前的温度和天气状况，以及是否适合出去游玩。"
